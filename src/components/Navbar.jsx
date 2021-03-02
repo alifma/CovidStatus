@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
 const navbar = () => {
   return (
-    <nav className="navbar navbar-expand navbar-light bg-light">
-      <a className="navbar-brand" href="#">
-        Navbar
-      </a>
+    <nav className="navbar navbar-expand navbar-light bg-white">
+      <Link className="navbar-brand font-weight-bold" to="/">
+        <span className="text-info">Covid19</span> Status
+      </Link>
       
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
