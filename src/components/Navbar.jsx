@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
 const navbar = () => {
   return (
-    <nav className="navbar navbar-expand navbar-light bg-white">
+    <nav className="navbar navbar-expand navbar-light bg-light">
       <Link className="navbar-brand font-weight-bold" to="/">
-        <span className="text-info">Covid19</span> Status
+        <span className="text-main">Covid-19</span> Status
       </Link>
       
-      <div className="collapse navbar-collapse" id="navbarNav">
+      <div className="collapse justify-content-end navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
           <li className="nav-item">
             <Link className="nav-link" to="/">
@@ -16,6 +16,11 @@ const navbar = () => {
           <li className="nav-item">
             <Link className="nav-link" to="/about">
               About
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/home">
+              Home
             </Link>
           </li>
         </ul>
