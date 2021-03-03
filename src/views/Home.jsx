@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import formatIndo from "../helpers/indonesian";
-import formatDate from "../helpers/indonesian";
+import formatDate from "../helpers/customDate";
+// Redux
+import { GET_GLOBAL_DATA } from './Home/action'
+// useSelector = mapGetter
+// useDispatch = mapAction
+import { useSelector, useDispatch } from 'react-redux'
 const Home = () => {
+  const dispatch = useDispatch()
+  const dataGlobal = useSelector((state) => state.global)
   const [globalData, setGlobalData] = useState(null);
   const [indonesiaData, setIndonesiaData] = useState({
     TotalConfirmed: 0,
@@ -24,6 +31,10 @@ const Home = () => {
         console.log(err);
       });
   }, []);
+  // GlobalData Via Redux
+  useEffect(() => {
+    dispatch(GET_GLOBAL_DATA())
+  }, [])
   return (
     <div>
       <div className="container pt-5 pb-5">
@@ -35,7 +46,8 @@ const Home = () => {
             <p className="text-center text-secondary">
               By Alifma & api.covid19api.com
             </p>
-            {globalData === null ? (
+            {dataGlobal.listLoading?
+            (
               <div>
                 <div className="d-flex justify-content-center">
                   <div className="spinner-border" role="status">
@@ -44,9 +56,12 @@ const Home = () => {
                 </div>
                 <h5 className="text-center">Please Wait...</h5>
               </div>
-            ) : (
+            ):dataGlobal.listError?
+            (
+              <h1 className="text-center"> {dataGlobal.errMessage} </h1>
+            ):
+            (
               <div>
-                {/* <i className="fab fa-youtube"></i> */}
                 <h2 className="text-center mt-5 mb-3"> Global Case</h2>
                 <div className="row">
                   {/* Confirmed */}
@@ -56,14 +71,14 @@ const Home = () => {
                         <h3 className="font-weight-bold">Confirmed</h3>
                         <h5 className="text-dark mb-0">Total Case</h5>
                         <h5 className="text-warning d-inline font-weight-bold">
-                          {formatIndo(globalData.TotalConfirmed)}
+                          {formatIndo(dataGlobal.list.TotalConfirmed)}
                         </h5>
                         <p className="pl-2 d-inline align-top">
                           <span className="text-success">{`(+ ${formatIndo(
                             (
-                              (globalData.NewConfirmed /
-                                (globalData.TotalConfirmed -
-                                  globalData.NewConfirmed)) *
+                              (dataGlobal.list.NewConfirmed /
+                                (dataGlobal.list.TotalConfirmed -
+                                  dataGlobal.list.NewConfirmed)) *
                               100
                             ).toFixed(2)
                           )} %)`}</span>
@@ -71,7 +86,7 @@ const Home = () => {
                         <h5 className="text-dark mb-0"> Today</h5>
                         <h5>
                           <span className="text-warning font-weight-bold">
-                            {formatIndo(globalData.NewConfirmed)}
+                            {formatIndo(dataGlobal.list.NewConfirmed)}
                           </span>
                         </h5>
                       </div>
@@ -84,14 +99,14 @@ const Home = () => {
                         <h3 className="font-weight-bold">Deaths</h3>
                         <h5 className="text-dark mb-0">Total Death</h5>
                         <h5 className="text-danger d-inline font-weight-bold">
-                          {formatIndo(globalData.TotalDeaths)}
+                          {formatIndo(dataGlobal.list.TotalDeaths)}
                         </h5>
                         <p className="pl-2 d-inline align-top">
                           <span className="text-success">{`(+ ${formatIndo(
                             (
-                              (globalData.NewDeaths /
-                                (globalData.TotalDeaths -
-                                  globalData.NewDeaths)) *
+                              (dataGlobal.list.NewDeaths /
+                                (dataGlobal.list.TotalDeaths -
+                                  dataGlobal.list.NewDeaths)) *
                               100
                             ).toFixed(2)
                           )} %)`}</span>
@@ -99,7 +114,7 @@ const Home = () => {
                         <h5 className="text-dark mb-0">Today</h5>
                         <h5>
                           <span className="text-danger font-weight-bold">
-                            {formatIndo(globalData.NewDeaths)}
+                            {formatIndo(dataGlobal.list.NewDeaths)}
                           </span>
                         </h5>
                       </div>
@@ -112,14 +127,14 @@ const Home = () => {
                         <h3 className="font-weight-bold">Recovered</h3>
                         <h5 className="text-dark mb-0">Total Recovered</h5>
                         <h5 className="text-success d-inline font-weight-bold">
-                          {formatIndo(globalData.TotalRecovered)}
+                          {formatIndo(dataGlobal.list.TotalRecovered)}
                         </h5>
                         <p className="pl-2 d-inline align-top">
                           <span className="text-success">{`(+ ${formatIndo(
                             (
-                              (globalData.NewRecovered /
-                                (globalData.TotalRecovered -
-                                  globalData.NewRecovered)) *
+                              (dataGlobal.list.NewRecovered /
+                                (dataGlobal.list.TotalRecovered -
+                                  dataGlobal.list.NewRecovered)) *
                               100
                             ).toFixed(2)
                           )} %)`}</span>
@@ -127,14 +142,27 @@ const Home = () => {
                         <h5 className="text-dark mb-0">Today</h5>
                         <h5>
                           <span className="text-success font-weight-bold">
-                            {formatIndo(globalData.NewRecovered)}
+                            {formatIndo(dataGlobal.list.NewRecovered)}
                           </span>
                         </h5>
                       </div>
                     </div>
                   </div>
                 </div>
-                <hr />
+              </div>
+            )
+            }
+            {indonesiaData === null ? (
+              <div>
+                <div className="d-flex justify-content-center">
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
+                <h5 className="text-center">Please Wait...</h5>
+              </div>
+            ) : (
+              <div>
                 <h2 className="text-center my-3"> Indonesian Case</h2>
                 <div className="row">
                   {/* Confirmed */}
@@ -229,7 +257,7 @@ const Home = () => {
                     <div className="card h-100 radius-25">
                       <div className="card-body text-center">
                         <h3 className="font-weight-bold">Updated</h3>
-                        <h5>{`${formatDate(new Date(globalData.Date))}`}</h5>
+                        <h5>{`${formatDate(new Date(dataGlobal.list.Date))}`}</h5>
                         <h5>
                           <span className="font-weight-bold">Source:</span>{" "}
                           <a href="https://api.covid19api.com/">Covid19API</a>
