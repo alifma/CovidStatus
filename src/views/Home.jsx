@@ -20,14 +20,15 @@ const Home = () => {
   });
   // Global Data
   useEffect(() => {
-    axios
-      .get("https://api.covid19api.com/summary")
-      .then((res) => {
-        setIndonesiaData(res.data.Countries[77]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log('Jalanin Axios')
+    // axios
+    //   .get("https://api.covid19api.com/summary")
+    //   .then((res) => {
+    //     setIndonesiaData(res.data.Countries[77]);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }, []);
   // GlobalData Via Redux
   useEffect(() => {
