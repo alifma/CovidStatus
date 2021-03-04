@@ -5,7 +5,7 @@ const formatDate = (date) => {
   const month = arrMonth[new Date(date).getMonth()]
   const dates = new Date(date).getDate()
   const years = new Date(date).getFullYear()
-  const time = new Date(date).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+  // const time = new Date(date).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
   return(`${day}, ${dates} ${month} ${years}`)
   // return(date)
 }

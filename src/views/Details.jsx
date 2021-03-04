@@ -1,20 +1,25 @@
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import formatDate from "../helpers/customDate";
 import formatIndo from "../helpers/indonesian";
+import simpleDate from "../helpers/simpleDate";
+import axios from 'axios'
 import { Link } from "react-router-dom";
 // Redux
 import { GET_COUNTRY_DETAILS } from "./Home/action";
 // useSelector = mapGetter
 // useDispatch = mapAction
 import { useSelector, useDispatch } from "react-redux";
-
+// GoogleMaps
 import {
   GoogleMap,
   withScriptjs,
   withGoogleMap,
   Marker,
 } from "react-google-maps";
+
+// ChartJS
+import { Line } from 'react-chartjs-2'
 
 function Map(props) {
   return (
@@ -34,9 +39,72 @@ const Details = () => {
   const params = useParams();
   // CountryData via Redux
   const detailCountry = useSelector((state) => state.details);
+  // ChartJS data
+  const [chartData, setChartData]  = useState({})
+  // DateHolder
+  const chart = () => {
+    let caseDate = []
+    let confCase = []
+    let deathCase = []
+    let recovCase = []
+    let activeCase = []
+    axios.get(`https://api.covid19api.com/country/${params.slug}`)
+      .then((res) => {
+        for(let data of res.data.reverse().slice(0,30).reverse()){
+          confCase.push(Number(data.Confirmed))
+          deathCase.push(Number(data.Deaths))
+          recovCase.push(Number(data.Recovered))
+          activeCase.push(Number(data.Active))
+          caseDate.push(simpleDate(data.Date))
+        }
+        // console.log(confCase)
+        setChartData({
+          labels: caseDate,
+          datasets: [
+            {
+              label: 'Death Case',
+              data: deathCase,
+              backgroundColor: [
+                'rgba(220, 53, 69, 1)'
+              ],
+              borderWidth: 4
+            },
+            {
+              label: 'Active Case',
+              data: activeCase,
+              backgroundColor: [
+                'rgba(70, 110, 182, 0.5)'
+              ],
+              borderWidth: 4
+            },
+            {
+              label: 'Recovered Case',
+              data: recovCase,
+              backgroundColor: [
+                'rgba(40, 167, 69, 0.3)'
+              ],
+              borderWidth: 4
+            },
+            {
+              label: 'Confirmed Case',
+              data: confCase,
+              backgroundColor: [
+                'rgba(255, 193, 7, 0.3)'
+              ],
+              borderWidth: 4
+            }
+          ]
+        })
+      })
+      .catch((err) => {
+      })
+  }
   useEffect(() => {
     dispatch(GET_COUNTRY_DETAILS(params.slug));
   }, []);
+  useEffect(() => {
+    chart()
+  }, [])
   return (
     <div className="container pt-5">
       <Link to="/" className="h1 text-dark float-left">
@@ -56,7 +124,10 @@ const Details = () => {
           <h5 className="text-center">Please Wait...</h5>
         </div>
       ) : detailCountry.listError ? (
-        <h1 className="text-center my-5"> {detailCountry.errMessage} </h1>
+        <div>
+          <h1 className="text-center text-secondary mt-5"> {detailCountry.errMessage} </h1>
+          <p className="text-center text-secondary mb-5"> Try Again Later </p>
+        </div>
       ) : (
         <div>
           <div className="card">
@@ -179,9 +250,7 @@ const Details = () => {
                           </h5>
                           <div className="row">
                             <div className="col-3">
-                              <p className="font-weight-bold mb-0">
-                                Confirmed
-                              </p>
+                              <p className="font-weight-bold mb-0">Confirmed</p>
                             </div>
                             <div className="col-9">
                               <p className="font-weight-bold mb-0 text-warning">
@@ -191,9 +260,7 @@ const Details = () => {
                           </div>
                           <div className="row">
                             <div className="col-3">
-                              <p className="font-weight-bold mb-0">
-                                Deaths
-                              </p>
+                              <p className="font-weight-bold mb-0">Deaths</p>
                             </div>
                             <div className="col-9">
                               <p className="font-weight-bold mb-0 text-danger">
@@ -203,9 +270,7 @@ const Details = () => {
                           </div>
                           <div className="row">
                             <div className="col-3">
-                              <p className="font-weight-bold mb-0">
-                                Recovered
-                              </p>
+                              <p className="font-weight-bold mb-0">Recovered</p>
                             </div>
                             <div className="col-9">
                               <p className="font-weight-bold mb-0 text-success">
@@ -217,6 +282,33 @@ const Details = () => {
                       </div>
                     </div>
                   ))}
+                </div>
+              </div>
+              <div className="row mt-4">
+                <div className="col-12">
+                  <h4 className="font-weight-bold">Daily Update</h4>
+                  <Line data={chartData} 
+                  options={{
+                    responsive: true,
+                    title: {text: 'Last 30 Days Data', display: true},
+                    scales: {
+                      yAxes:[{
+                        ticks: {
+                          // autoSkip: true,
+                          // maxTicksLimit: 10,
+                          beginAtZero: true
+                        },
+                        gridLines: {
+                          display: false
+                        }
+                      }],
+                      xAxes: [{
+                        gridLines: {
+                          display: false
+                        }
+                      }]
+                    }
+                  }}/>
                 </div>
               </div>
             </div>
