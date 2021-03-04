@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import formatIndo from "../helpers/indonesian";
-import formatDate from "../helpers/customDate";
+import { Link } from 'react-router-dom'
 // Redux
 import { GET_GLOBAL_DATA, GET_COUNTRY_DATA } from "./Home/action";
 // useSelector = mapGetter
@@ -8,6 +8,7 @@ import { GET_GLOBAL_DATA, GET_COUNTRY_DATA } from "./Home/action";
 import { useSelector, useDispatch } from "react-redux";
 
 const Landing = () => {
+  const [searchName, setSearchName] = useState()
   const dispatch = useDispatch();
   const dataGlobal = useSelector((state) => state.global);
   const dataCountry = useSelector((state) => state.country);
@@ -18,7 +19,7 @@ const Landing = () => {
   // CountryData via Redux
   useEffect(() => {
     dispatch(GET_COUNTRY_DATA())
-}, [])
+  }, [])
   return (
     <div className="container">
       <div className="row vh-full">
@@ -174,7 +175,12 @@ const Landing = () => {
       <div>
           <h2 className="text-center font-weight-bold">Find Your Country Data</h2>
           <div className="text-center my-3">
-            <input className="form-control  mx-auto w-50" type="text" placeholder="Find your country"></input>
+            <form action="" className="form-inline text-center">
+                <div className="mx-auto">
+                <input onKeyUp="" className="form-control" type="text" placeholder="Find your country"></input>
+                <button className="btn btn-primary ml-2"><i className="fas fa-search mr-2"></i> Search</button>
+                </div>
+            </form>
           </div>
           <div className="row">
           {dataGlobal.country.map((item, index) =>
@@ -182,7 +188,7 @@ const Landing = () => {
               <div key={index} className="col-2">
                 <div className="card mb-3">
                   <div className="card-body text-center">
-                  {item.Country}
+                  <Link to={`/${item.Slug}`}>{item.Country}</Link>
                   </div>
                 </div>
               </div>

@@ -29,3 +29,18 @@ export const GET_COUNTRY_DATA = () => {
     })
   }
 }
+
+export const GET_COUNTRY_DETAILS = (slug) => {
+  return {
+    type: 'GET_COUNTRY_DETAILS',
+    payload: new Promise((resolve, reject) => {
+      axios.get(`${apiURL}/country/${slug}`)
+        .then((res) => {
+          resolve((res.data).reverse())
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
+  }
+}
