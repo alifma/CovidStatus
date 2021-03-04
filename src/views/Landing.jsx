@@ -10,16 +10,14 @@ import { useSelector, useDispatch } from "react-redux";
 const Landing = () => {
   const [search, setSearch] = useState('')
   const [searchResult, setSearchResult] = useState([])
-  const dispatch = useDispatch();
-  const dataGlobal = useSelector((state) => state.global);
-  const dataCountry = useSelector((state) => state.country);
+  const dispatch = useDispatch()
+  const dataGlobal = useSelector((state) => state.global)
 
   const searchName = () => {
     let hasilSearch = dataGlobal.country.filter((i) => {
       return i.Slug.includes(search.toLowerCase())
     })
     setSearchResult(hasilSearch)
-    console.log(hasilSearch)
   }
   const searchByName = (e) => {
     e.preventDefault()

@@ -21,7 +21,6 @@ const globalReducers = (state = initialState, action) => {
       return {...state, listLoading: true}
     case "GET_GLOBAL_DATA_FULFILLED":
       console.log('FullFilled')
-      console.log(action.payload)
       return {...state, listLoading: false, list: action.payload.Global, country: action.payload.Countries}
     case "GET_GLOBAL_DATA_REJECTED":
       console.log('Rejected')

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import formatIndo from "../helpers/indonesian";
 import formatDate from "../helpers/customDate";
 // Redux
@@ -21,14 +20,6 @@ const Home = () => {
   // Global Data
   useEffect(() => {
     console.log('Jalanin Axios')
-    // axios
-    //   .get("https://api.covid19api.com/summary")
-    //   .then((res) => {
-    //     setIndonesiaData(res.data.Countries[77]);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   }, []);
   // GlobalData Via Redux
   useEffect(() => {
