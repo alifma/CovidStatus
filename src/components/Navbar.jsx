@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 const navbar = () => {
   return (
-    <nav className="navbar navbar-expand navbar-light bg-light">
+    <div className="bg-light">
+      <div className="container">
+      <nav className="navbar navbar-expand navbar-light">
       <Link className="navbar-brand font-weight-bold" to="/">
         <span className="text-main">Covid-19</span> Status
       </Link>
@@ -26,6 +28,8 @@ const navbar = () => {
         </ul>
       </div>
     </nav>
+    </div>
+    </div>
   );
 };
 export default navbar;
