@@ -207,48 +207,64 @@ const Landing = () => {
                   </div>
                 </div>
               </div>
-              <hr/>
-      <div>
-        <h2 className="text-center font-weight-bold">Find Your Country Data</h2>
-        <div className="text-center my-3">
-          <form onSubmit={(e) => searchByName(e)} className="form-inline">
-          <div className="mx-auto mb-3">
-            <input
-              className="form-control"
-              type="text"
-              placeholder="Find your country"
-              value={search}
-              onChange= {(e) => setSearch(e.target.value)}
-            ></input>
-            <button  type="submit" className="btn btn-primary ml-2">
-              <i className="fas fa-search mr-2"></i> Search
-            </button>
-          </div>
-          </form>
-        </div>
-        <div className="row">
-          { (search === '') ?
-            (<div className="col-12">
-              <h5 className="text-center">Please Type Something And Press enter</h5>
-            </div>):
-            (searchResult.length <= 0) ?
-            (<div className="col-12">
-              <h2 className="text-center">No result</h2>
-            </div>):
-            (
-              searchResult.map((item, indexResult) => (
-                <div key={indexResult} className="col-6 col-lg-4 col-md-4">
-                  <div className="card mb-3">
-                    <div className="card-body text-center">
-                      <Link to={`/${item.Slug}`}>{item.Country}</Link>
+              <hr />
+              <div>
+                <h2 className="text-center font-weight-bold">
+                  Find Your Country Data
+                </h2>
+                <div className="text-center my-3">
+                  <form
+                    onSubmit={(e) => searchByName(e)}
+                    className="form-inline"
+                  >
+                    <div className="mx-auto mb-3">
+                      <input
+                        className="form-control"
+                        type="text"
+                        placeholder="Find your country"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                      ></input>
+                      <button type="submit" className="btn btn-primary ml-2">
+                        <i className="fas fa-search mr-2"></i> Search
+                      </button>
                     </div>
-                  </div>
+                  </form>
                 </div>
-              ))
-            )
-          }
-        </div>
-      </div>
+                <div className="row">
+                  {search === "" ? (
+                    <div className="col-12">
+                      <h5 className="text-center">
+                        Please Type Something And Press enter
+                      </h5>
+                    </div>
+                  ) : searchResult.length <= 0 ? (
+                    <div className="col-12">
+                      <h2 className="text-center">No result</h2>
+                    </div>
+                  ) : (
+                    searchResult.map((item, indexResult) => (
+                      <div
+                        key={indexResult}
+                        className="col-6 col-lg-4 col-md-4"
+                      >
+                        <div className="card mb-3">
+                          <div className="card-body text-center">
+                            <Link to={`/${item.Slug}`} className="d-inline font-weight-bold text-dark">
+                              <img
+                                className="d-inline mr-2"
+                                src={`https://www.countryflags.io/${item.CountryCode.toLowerCase()}/flat/64.png`}
+                              />
+                              {`${item.Country} (${item.CountryCode})`}
+                            </Link>
+                            {/* <Link to={`/${item.Slug}`}>{item.Country}</Link> */}
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
             </div>
           )}
         </div>
