@@ -70,7 +70,7 @@ const Landing = () => {
       <div className="row">
         <div className="col-12">
           {dataGlobal.listLoading ? (
-            <div>
+            <div className="my-5">
               <div className="d-flex justify-content-center">
                 <div className="spinner-border" role="status">
                   <span className="sr-only">Loading...</span>
@@ -79,7 +79,7 @@ const Landing = () => {
               <h5 className="text-center">Please Wait...</h5>
             </div>
           ) : dataGlobal.listError ? (
-            <h1 className="text-center"> {dataGlobal.errMessage} </h1>
+            <h1 className="text-center my-5"> {dataGlobal.errMessage} </h1>
           ) : (
             <div>
               <h2 className="text-center font-weight-bold">Global Case</h2>
@@ -213,7 +213,7 @@ const Landing = () => {
       <div>
         <h2 className="text-center font-weight-bold">Find Your Country Data</h2>
         <div className="text-center my-3">
-          <form onSubmit={(e) => searchByName(e)} class="form-inline">
+          <form onSubmit={(e) => searchByName(e)} className="form-inline">
           <div className="mx-auto mb-3">
             <input
               className="form-control"
@@ -238,8 +238,8 @@ const Landing = () => {
               <h2 className="text-center">No result</h2>
             </div>):
             (
-              searchResult.map((item, index) => (
-                <div key={index} className="col-6 col-lg-4 col-md-4">
+              searchResult.map((item, indexResult) => (
+                <div key={indexResult} className="col-6 col-lg-4 col-md-4">
                   <div className="card mb-3">
                     <div className="card-body text-center">
                       <Link to={`/${item.Slug}`}>{item.Country}</Link>
