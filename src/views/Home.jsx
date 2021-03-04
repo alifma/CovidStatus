@@ -10,7 +10,6 @@ import { useSelector, useDispatch } from 'react-redux'
 const Home = () => {
   const dispatch = useDispatch()
   const dataGlobal = useSelector((state) => state.global)
-  const [globalData, setGlobalData] = useState(null);
   const [indonesiaData, setIndonesiaData] = useState({
     TotalConfirmed: 0,
     NewConfirmed: 0,
@@ -24,7 +23,6 @@ const Home = () => {
     axios
       .get("https://api.covid19api.com/summary")
       .then((res) => {
-        setGlobalData(res.data.Global);
         setIndonesiaData(res.data.Countries[77]);
       })
       .catch((err) => {
