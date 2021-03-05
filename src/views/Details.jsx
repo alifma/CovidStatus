@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import formatDate from "../helpers/customDate";
 import formatIndo from "../helpers/indonesian";
 import simpleDate from "../helpers/simpleDate";
-import axios from 'axios'
+import axios from "axios";
 import { Link } from "react-router-dom";
 // Redux
 import { GET_COUNTRY_DETAILS } from "./Home/action";
@@ -19,7 +19,7 @@ import {
 } from "react-google-maps";
 
 // ChartJS
-import { Line } from 'react-chartjs-2'
+import { Line } from "react-chartjs-2";
 
 function Map(props) {
   return (
@@ -40,77 +40,70 @@ const Details = () => {
   // CountryData via Redux
   const detailCountry = useSelector((state) => state.details);
   // ChartJS data
-  const [chartData, setChartData]  = useState({})
+  const [chartData, setChartData] = useState({});
   useEffect(() => {
     const chartRender = () => {
-      let caseDate = []
-      let confCase = []
-      let deathCase = []
-      let recovCase = []
-      let activeCase = []
-      axios.get(`https://api.covid19api.com/country/${params.slug}`)
+      let caseDate = [];
+      let confCase = [];
+      let deathCase = [];
+      let recovCase = [];
+      let activeCase = [];
+      axios
+        .get(`https://api.covid19api.com/country/${params.slug}`)
         .then((res) => {
-          for(let data of res.data.reverse().slice(0,30).reverse()){
-            confCase.push(Number(data.Confirmed))
-            deathCase.push(Number(data.Deaths))
-            recovCase.push(Number(data.Recovered))
-            activeCase.push(Number(data.Active))
-            caseDate.push(simpleDate(data.Date))
+          for (let data of res.data.reverse().slice(0, 30).reverse()) {
+            confCase.push(Number(data.Confirmed));
+            deathCase.push(Number(data.Deaths));
+            recovCase.push(Number(data.Recovered));
+            activeCase.push(Number(data.Active));
+            caseDate.push(simpleDate(data.Date));
           }
           // console.log(confCase)
           setChartData({
             labels: caseDate,
             datasets: [
               {
-                label: 'Death Case',
+                label: "Death Case",
                 data: deathCase,
-                backgroundColor: [
-                  'rgba(220, 53, 69, 1)'
-                ],
-                borderWidth: 4
+                backgroundColor: ["rgba(220, 53, 69, 1)"],
+                borderWidth: 4,
               },
               {
-                label: 'Active Case',
+                label: "Active Case",
                 data: activeCase,
-                backgroundColor: [
-                  'rgba(70, 110, 182, 0.5)'
-                ],
-                borderWidth: 4
+                backgroundColor: ["rgba(70, 110, 182, 0.5)"],
+                borderWidth: 4,
               },
               {
-                label: 'Recovered Case',
+                label: "Recovered Case",
                 data: recovCase,
-                backgroundColor: [
-                  'rgba(40, 167, 69, 0.3)'
-                ],
-                borderWidth: 4
+                backgroundColor: ["rgba(40, 167, 69, 0.3)"],
+                borderWidth: 4,
               },
               {
-                label: 'Confirmed Case',
+                label: "Confirmed Case",
                 data: confCase,
-                backgroundColor: [
-                  'rgba(255, 193, 7, 0.3)'
-                ],
-                borderWidth: 4
-              }
-            ]
-          })
+                backgroundColor: ["rgba(255, 193, 7, 0.3)"],
+                borderWidth: 4,
+              },
+            ],
+          });
         })
         .catch((err) => {
-          console.log(err)
-        })
-    }
-    dispatch(GET_COUNTRY_DETAILS(params.slug))
-    chartRender()
+          console.log(err);
+        });
+    };
+    dispatch(GET_COUNTRY_DETAILS(params.slug));
+    chartRender();
   }, []);
   return (
     <div className="container pt-5">
       <Link to="/" className="h1 text-dark float-left">
         <i className="fas fa-arrow-left"></i>
       </Link>
-      <Link to="/" className="h1 text-white float-right">
+      <h1 className="text-white float-right">
         <i className="fas fa-arrow-left"></i>
-      </Link>
+      </h1>
       <h1 className="text-center mb-5">Country Details</h1>
       {detailCountry.listLoading ? (
         <div>
@@ -123,7 +116,10 @@ const Details = () => {
         </div>
       ) : detailCountry.listError ? (
         <div>
-          <h1 className="text-center text-secondary mt-5"> {detailCountry.errMessage} </h1>
+          <h1 className="text-center text-secondary mt-5">
+            {" "}
+            {detailCountry.errMessage}{" "}
+          </h1>
           <p className="text-center text-secondary mb-5"> Try Again Later </p>
         </div>
       ) : (
@@ -182,31 +178,6 @@ const Details = () => {
                   </div>
                 </div>
                 <div className="col-12 col-lg-6 col-md-6">
-                  {/* <div className="row">
-                    <div className="col-4">
-                      <p className="font-weight-bold mb-0">Confirmed Today</p>
-                    </div>
-                    <div className="col-8">
-                      <p className="mb-0">{formatIndo(detailCountry.list[0].Confirmed-detailCountry.list[1].Confirmed)}</p>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-4">
-                      <p className="font-weight-bold mb-0">Death Today</p>
-                    </div>
-                    <div className="col-8">
-                      <p className="mb-0">{formatIndo(detailCountry.list[0].Deaths-detailCountry.list[1].Deaths)}</p>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-4">
-                      <p className="font-weight-bold mb-0">Recovered Today</p>
-                    </div>
-                    <div className="col-8">
-                      <p className="mb-0">{formatIndo(detailCountry.list[0].Recovered-detailCountry.list[1].Recovered)}</p>
-                    </div>
-                  </div>
-                   */}
                   <div className="row">
                     <div className="col-4">
                       <p className="font-weight-bold mb-0">Updated</p>
@@ -248,30 +219,30 @@ const Details = () => {
                             {formatDate(item.Date)}
                           </h5>
                           <div className="row">
-                            <div className="col-3">
+                            <div className="col-5">
                               <p className="font-weight-bold mb-0">Confirmed</p>
                             </div>
-                            <div className="col-9">
+                            <div className="col-7">
                               <p className="font-weight-bold mb-0 text-warning">
                                 {formatIndo(item.Confirmed)}
                               </p>
                             </div>
                           </div>
                           <div className="row">
-                            <div className="col-3">
+                            <div className="col-5">
                               <p className="font-weight-bold mb-0">Deaths</p>
                             </div>
-                            <div className="col-9">
+                            <div className="col-7">
                               <p className="font-weight-bold mb-0 text-danger">
                                 {formatIndo(item.Deaths)}
                               </p>
                             </div>
                           </div>
                           <div className="row">
-                            <div className="col-3">
+                            <div className="col-5">
                               <p className="font-weight-bold mb-0">Recovered</p>
                             </div>
-                            <div className="col-9">
+                            <div className="col-7">
                               <p className="font-weight-bold mb-0 text-success">
                                 {formatIndo(item.Recovered)}
                               </p>
@@ -286,28 +257,34 @@ const Details = () => {
               <div className="row mt-4">
                 <div className="col-12">
                   <h4 className="font-weight-bold">Daily Update</h4>
-                  <Line data={chartData} 
-                  options={{
-                    responsive: true,
-                    title: {text: 'Last 30 Days Data', display: true},
-                    scales: {
-                      yAxes:[{
-                        ticks: {
-                          // autoSkip: true,
-                          // maxTicksLimit: 10,
-                          beginAtZero: true
-                        },
-                        gridLines: {
-                          display: false
-                        }
-                      }],
-                      xAxes: [{
-                        gridLines: {
-                          display: false
-                        }
-                      }]
-                    }
-                  }}/>
+                  <Line
+                    data={chartData}
+                    options={{
+                      responsive: true,
+                      title: { text: "Last 30 Days Data", display: true },
+                      scales: {
+                        yAxes: [
+                          {
+                            ticks: {
+                              autoSkip: true,
+                              maxTicksLimit: 10,
+                              beginAtZero: true,
+                            },
+                            gridLines: {
+                              display: false,
+                            },
+                          },
+                        ],
+                        xAxes: [
+                          {
+                            gridLines: {
+                              display: false,
+                            },
+                          },
+                        ],
+                      },
+                    }}
+                  />
                 </div>
               </div>
             </div>

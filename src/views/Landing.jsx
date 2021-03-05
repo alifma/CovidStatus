@@ -3,8 +3,6 @@ import formatIndo from "../helpers/indonesian";
 import { Link } from 'react-router-dom'
 // Redux
 import { GET_GLOBAL_DATA, GET_COUNTRY_DATA } from "./Home/action";
-// useSelector = mapGetter
-// useDispatch = mapAction
 import { useSelector, useDispatch } from "react-redux";
 
 const Landing = () => {
@@ -23,12 +21,10 @@ const Landing = () => {
     e.preventDefault()
     searchName()
   }
-  // GlobalData Via Redux
+  // Call Action When Mounted Via Redux
   useEffect(() => {
+    searchName()
     dispatch(GET_GLOBAL_DATA())
-  }, [])
-  // CountryData via Redux
-  useEffect(() => {
     dispatch(GET_COUNTRY_DATA())
   }, [])
   return (
@@ -79,12 +75,12 @@ const Landing = () => {
             </div>
           ) : dataGlobal.listError ? (
             <div className="my-5">
-             <h3 className="text-center text-secondary"> {dataGlobal.errMessage} </h3>
-             <p className="text-center text-secondary"> Try Again Later </p>
+              <h3 className="text-center text-secondary"> {dataGlobal.errMessage} </h3>
+              <p className="text-center text-secondary"> Try Again Later </p>
             </div>
           ) : (
             <div>
-              <h2 className="text-center font-weight-bold my-3">Global Case</h2>
+              <h2 className="text-center font-weight-bold my-3">Global Status</h2>
               <div className="row">
                 {/* Confirmed */}
                 <div className="col-12 col-lg-4 col-md-4 mb-3">
@@ -172,7 +168,7 @@ const Landing = () => {
                 </div>
               </div>
               <hr />
-              <h2 className="text-center font-weight-bold my-3">Indonesian Case</h2>
+              <h2 className="text-center font-weight-bold my-3">Indonesia Status</h2>
               <div className="row">
                 {/* Confirmed */}
                 <div className="col-12 col-lg-4 col-md-4 mb-3">
@@ -262,7 +258,6 @@ const Landing = () => {
                               />
                               {`${item.Country} (${item.CountryCode})`}
                             </Link>
-                            {/* <Link to={`/${item.Slug}`}>{item.Country}</Link> */}
                           </div>
                         </div>
                       </div>
