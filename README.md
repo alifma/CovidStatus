@@ -45,5 +45,6 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ## Screenshot
 ### Home Page
 <img src="https://i.ibb.co/cwBV92w/Covid19-Status-Home.png"/>
+
 ### Detail Page
 <img src="https://i.ibb.co/jZfNP0H/Covid19-Status-Details.png"/>
