@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/css/style.css"],"names":[],"mappings":"AAAA,KACE,8BACF,CACA,WACE,kBACF,CAEA,WACE,aACF","file":"main.513a4955.chunk.css","sourcesContent":["body{\n  font-family: 'Rubik', sans-serif;\n}\n.radius-25 {\n  border-radius: 15px;\n}\n\n.text-main {\n  color: #F47457;\n}\n"]}
