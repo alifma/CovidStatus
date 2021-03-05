@@ -50,6 +50,7 @@ const Landing = () => {
             <a
               className="text-secondary"
               target="_blank"
+              rel="noreferrer"
               href="https://documenter.getpostman.com/view/10808728/SzS8rjbc"
             >
               Covid-19Api.com
@@ -60,7 +61,7 @@ const Landing = () => {
           <img
             src="https://i.ibb.co/CKWFyht/5876.png"
             className="img-fluid"
-            alt=""
+            alt="countryflags.png"
           />
         </div>
       </div>
@@ -253,6 +254,7 @@ const Landing = () => {
                             <Link to={`/${item.Slug}`} className="d-inline font-weight-bold text-dark">
                               <img
                                 className="d-inline mr-2"
+                                alt="countryflags.png"
                                 src={`https://www.countryflags.io/${item.CountryCode.toLowerCase()}/flat/64.png`}
                               />
                               {`${item.Country} (${item.CountryCode})`}

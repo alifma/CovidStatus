@@ -41,70 +41,68 @@ const Details = () => {
   const detailCountry = useSelector((state) => state.details);
   // ChartJS data
   const [chartData, setChartData]  = useState({})
-  // DateHolder
-  const chart = () => {
-    let caseDate = []
-    let confCase = []
-    let deathCase = []
-    let recovCase = []
-    let activeCase = []
-    axios.get(`https://api.covid19api.com/country/${params.slug}`)
-      .then((res) => {
-        for(let data of res.data.reverse().slice(0,30).reverse()){
-          confCase.push(Number(data.Confirmed))
-          deathCase.push(Number(data.Deaths))
-          recovCase.push(Number(data.Recovered))
-          activeCase.push(Number(data.Active))
-          caseDate.push(simpleDate(data.Date))
-        }
-        // console.log(confCase)
-        setChartData({
-          labels: caseDate,
-          datasets: [
-            {
-              label: 'Death Case',
-              data: deathCase,
-              backgroundColor: [
-                'rgba(220, 53, 69, 1)'
-              ],
-              borderWidth: 4
-            },
-            {
-              label: 'Active Case',
-              data: activeCase,
-              backgroundColor: [
-                'rgba(70, 110, 182, 0.5)'
-              ],
-              borderWidth: 4
-            },
-            {
-              label: 'Recovered Case',
-              data: recovCase,
-              backgroundColor: [
-                'rgba(40, 167, 69, 0.3)'
-              ],
-              borderWidth: 4
-            },
-            {
-              label: 'Confirmed Case',
-              data: confCase,
-              backgroundColor: [
-                'rgba(255, 193, 7, 0.3)'
-              ],
-              borderWidth: 4
-            }
-          ]
+  useEffect(() => {
+    const chartRender = () => {
+      let caseDate = []
+      let confCase = []
+      let deathCase = []
+      let recovCase = []
+      let activeCase = []
+      axios.get(`https://api.covid19api.com/country/${params.slug}`)
+        .then((res) => {
+          for(let data of res.data.reverse().slice(0,30).reverse()){
+            confCase.push(Number(data.Confirmed))
+            deathCase.push(Number(data.Deaths))
+            recovCase.push(Number(data.Recovered))
+            activeCase.push(Number(data.Active))
+            caseDate.push(simpleDate(data.Date))
+          }
+          // console.log(confCase)
+          setChartData({
+            labels: caseDate,
+            datasets: [
+              {
+                label: 'Death Case',
+                data: deathCase,
+                backgroundColor: [
+                  'rgba(220, 53, 69, 1)'
+                ],
+                borderWidth: 4
+              },
+              {
+                label: 'Active Case',
+                data: activeCase,
+                backgroundColor: [
+                  'rgba(70, 110, 182, 0.5)'
+                ],
+                borderWidth: 4
+              },
+              {
+                label: 'Recovered Case',
+                data: recovCase,
+                backgroundColor: [
+                  'rgba(40, 167, 69, 0.3)'
+                ],
+                borderWidth: 4
+              },
+              {
+                label: 'Confirmed Case',
+                data: confCase,
+                backgroundColor: [
+                  'rgba(255, 193, 7, 0.3)'
+                ],
+                borderWidth: 4
+              }
+            ]
+          })
         })
-      })
-      .catch((err) => {
-      })
-  }
-  useEffect(() => {
-    dispatch(GET_COUNTRY_DETAILS(params.slug));
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+    dispatch(GET_COUNTRY_DETAILS(params.slug))
+    chartRender()
   }, []);
-  useEffect(() => {
-    chart()
-  }, [])
   return (
     <div className="container pt-5">
       <Link to="/" className="h1 text-dark float-left">
@@ -135,6 +133,7 @@ const Details = () => {
               <h1 className="d-inline">
                 <img
                   className="d-inline mr-4"
+                  alt="countryflags.png"
                   src={`https://www.countryflags.io/${detailCountry.list[0].CountryCode.toLowerCase()}/flat/64.png`}
                 />
                 {`${detailCountry.list[0].Country} (${detailCountry.list[0].CountryCode})`}
