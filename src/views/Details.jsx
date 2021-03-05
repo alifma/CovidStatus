@@ -139,49 +139,49 @@ const Details = () => {
                 {`${detailCountry.list[0].Country} (${detailCountry.list[0].CountryCode})`}
               </h1>
               <div className="row mt-4">
-                <div className="col-6">
+                <div className="col-12 col-lg-6 colmd-6">
                   <div className="row">
-                    <div className="col-3">
+                    <div className="col-4">
                       <p className="font-weight-bold mb-0">Confirmed</p>
                     </div>
-                    <div className="col-9">
+                    <div className="col-8">
                       <p className="mb-0">
                         {formatIndo(detailCountry.list[0].Confirmed)}
                       </p>
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-3">
+                    <div className="col-4">
                       <p className="font-weight-bold mb-0">Deaths</p>
                     </div>
-                    <div className="col-9">
+                    <div className="col-8">
                       <p className="mb-0">
                         {formatIndo(detailCountry.list[0].Deaths)}
                       </p>
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-3">
+                    <div className="col-4">
                       <p className="font-weight-bold mb-0">Recovered</p>
                     </div>
-                    <div className="col-9">
+                    <div className="col-8">
                       <p className="mb-0">
                         {formatIndo(detailCountry.list[0].Recovered)}
                       </p>
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-3">
+                    <div className="col-4">
                       <p className="font-weight-bold mb-0">Active</p>
                     </div>
-                    <div className="col-9">
+                    <div className="col-8">
                       <p className="mb-0">
                         {formatIndo(detailCountry.list[0].Active)}
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="col-6">
+                <div className="col-12 col-lg-6 col-md-6">
                   {/* <div className="row">
                     <div className="col-4">
                       <p className="font-weight-bold mb-0">Confirmed Today</p>
@@ -208,10 +208,10 @@ const Details = () => {
                   </div>
                    */}
                   <div className="row">
-                    <div className="col-3">
+                    <div className="col-4">
                       <p className="font-weight-bold mb-0">Updated</p>
                     </div>
-                    <div className="col-9">
+                    <div className="col-8">
                       <p className="mb-0">
                         {formatDate(
                           new Date(formatIndo(detailCountry.list[0].Date))
@@ -222,9 +222,9 @@ const Details = () => {
                 </div>
               </div>
               <div className="row mt-4">
-                <div className="col-6">
-                  <h4 className="font-weight-bold">Maps Location</h4>
-                  <div style={{ width: "100%", height: "90%" }}>
+                <div className="col-12 col-lg-6 col-md-6">
+                  <h4 className="font-weight-bold my-3">Maps Location</h4>
+                  <div style={{ width: "100%", height: "50vh" }}>
                     <WrappedMap
                       lat={Number(detailCountry.list[0].Lat)}
                       lng={Number(detailCountry.list[0].Lon)}
@@ -236,10 +236,10 @@ const Details = () => {
                   </div>
                 </div>
                 <div
-                  className="col-6"
-                  style={{ overflowY: "scroll", height: "80vh" }}
+                  className="col-12 col-lg-6 col-md-6"
+                  style={{ overflowY: "scroll", height: "60vh" }}
                 >
-                  <h4 className="font-weight-bold">Daily Update</h4>
+                  <h4 className="font-weight-bold my-3">Daily Update</h4>
                   {detailCountry.list.map((item, index) => (
                     <div key={index}>
                       <div className="card mb-3">

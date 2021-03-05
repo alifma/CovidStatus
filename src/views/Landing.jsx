@@ -33,19 +33,19 @@ const Landing = () => {
   }, [])
   return (
     <div className="container">
-      <div className="row vh-full">
+      <div className="row vh-full pt-5 pt-lg-0 pt-md-0">
         <div className="col-12 col-md-6 my-auto col-lg-6">
-          <h1 className="font-weight-bold">
+          <h1 className="font-weight-bold text-lg-left text-md-left text-center">
             <span className="text-main">Covid-19 </span>Cases{" "}
           </h1>
-          <h2 className="font-weight-bold">Information Website</h2>
-          <h5 className="text-justify">
+          <h2 className="font-weight-bold text-md-left text-lg-left text-center">Information Website</h2>
+          <h5 className="text-lg-left text-md-left text-center">
             You can find Covid-19 <span className="text-main">confirmed</span>,{" "}
             <span className="text-danger">death</span> and{" "}
             <span className="text-success">recovered </span> case around the
             world
           </h5>
-          <p className="text-secondary mb-0">
+          <p className="text-secondary text-lg-left text-md-left text-center mb-0">
             Source:{" "}
             <a
               className="text-secondary"
@@ -78,10 +78,13 @@ const Landing = () => {
               <h5 className="text-center">Please Wait...</h5>
             </div>
           ) : dataGlobal.listError ? (
-            <h1 className="text-center my-5"> {dataGlobal.errMessage} </h1>
+            <div className="my-5">
+             <h3 className="text-center text-secondary"> {dataGlobal.errMessage} </h3>
+             <p className="text-center text-secondary"> Try Again Later </p>
+            </div>
           ) : (
             <div>
-              <h2 className="text-center font-weight-bold">Global Case</h2>
+              <h2 className="text-center font-weight-bold my-3">Global Case</h2>
               <div className="row">
                 {/* Confirmed */}
                 <div className="col-12 col-lg-4 col-md-4 mb-3">
@@ -169,7 +172,7 @@ const Landing = () => {
                 </div>
               </div>
               <hr />
-              <h2 className="text-center font-weight-bold">Indonesian Case</h2>
+              <h2 className="text-center font-weight-bold my-3">Indonesian Case</h2>
               <div className="row">
                 {/* Confirmed */}
                 <div className="col-12 col-lg-4 col-md-4 mb-3">
@@ -220,13 +223,13 @@ const Landing = () => {
                   >
                     <div className="mx-auto mb-3">
                       <input
-                        className="form-control"
+                        className="form-control mb-3"
                         type="text"
                         placeholder="Find your country"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                       ></input>
-                      <button type="submit" className="btn btn-primary ml-2">
+                      <button type="submit" className="btn btn-primary ml-2 mb-3">
                         <i className="fas fa-search mr-2"></i> Search
                       </button>
                     </div>
